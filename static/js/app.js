@@ -17,7 +17,7 @@ var dataAdd = {
 }
 
 tableData.splice(2, 0, dataAdd)
-console.log(tableData);
+// console.log(tableData);
 
 // show data function
 function showData() {
@@ -25,7 +25,7 @@ function showData() {
     // show tableData in html
     var htmlTbody = "";
     tableData.forEach(function (rowData) {
-        console.log(rowData);
+        // console.log(rowData);
         htmlTbody += "<tr scope='row'>";
 
         htmlTbody += "<td>" + rowData.datetime + "</td>";
@@ -40,12 +40,41 @@ function showData() {
     });
 
     // log html table
-    console.log(htmlTbody);
+    // console.log(htmlTbody);
 
     // insert html table
     document.getElementById("tableBody").innerHTML = htmlTbody;
 
     return;
+}
+
+// Full filter
+function myFilter() {
+    // reinitialize table
+    tableData = data;
+    // define filter
+    var fullFilter = [];
+    fullFilter['datetime'] = document.getElementById("dateFilter").value.toUpperCase();
+    fullFilter['city'] = document.getElementById("cityFilter").value.toUpperCase();
+    fullFilter['state'] = document.getElementById("stateFilter").value.toUpperCase();
+    fullFilter['country'] = document.getElementById("countryFilter").value.toUpperCase();
+    fullFilter['shape'] = document.getElementById("shapeFilter").value.toUpperCase();
+    fullFilter['durationMinutes'] = document.getElementById("durationFilter").value.toUpperCase();
+    fullFilter['comments'] = document.getElementById("commentsFilter").value.toUpperCase();
+
+    var xFiltered = tableData.filter(obj => obj.city < 3);
+
+    // console.log(fullFilter)
+    tableData = tableData.filter(item => {
+        for (let key in fullFilter) {
+            console.log('in for loop');
+            if (item[key] === undefined || item[key] != fullFilter[key])
+                return false;
+        }
+        return true;
+    });
+    // apply filter
+    console.log(tableData)
 }
 
 // Date filter
@@ -56,21 +85,22 @@ function myDateInput() {
     filter = input.value.toUpperCase();
     table = document.getElementById("tableBody");
     tr = table.getElementsByTagName("tr");
-  
+
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0]; // Date is the first column
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+        td = tr[i].getElementsByTagName("td")[0]; // Date is the first column
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
         }
-      } 
     }
-  }
-  // City filter
+}
+
+// City filter
 function myCityInput() {
     // Declare variables 
     var input, filter, table, tr, td, i, txtValue;
@@ -78,22 +108,24 @@ function myCityInput() {
     filter = input.value.toUpperCase();
     table = document.getElementById("tableBody");
     tr = table.getElementsByTagName("tr");
-  
+    console.log('called'); myFilter();
+
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[1]; // City is the second column
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+        td = tr[i].getElementsByTagName("td")[1]; // City is the second column
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
         }
-      } 
     }
-  }
-  
-  // State filter
+}
+
+
+// State filter
 function myStateInput() {
     // Declare variables 
     var input, filter, table, tr, td, i, txtValue;
@@ -101,22 +133,22 @@ function myStateInput() {
     filter = input.value.toUpperCase();
     table = document.getElementById("tableBody");
     tr = table.getElementsByTagName("tr");
-  
+
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[2]; // State is the third column
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+        td = tr[i].getElementsByTagName("td")[2]; // State is the third column
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
         }
-      } 
     }
-  }
-  
-  // Country filter
+}
+
+// Country filter
 function myCountryInput() {
     // Declare variables 
     var input, filter, table, tr, td, i, txtValue;
@@ -124,22 +156,22 @@ function myCountryInput() {
     filter = input.value.toUpperCase();
     table = document.getElementById("tableBody");
     tr = table.getElementsByTagName("tr");
-  
+
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[3]; // Country is the fourth column
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+        td = tr[i].getElementsByTagName("td")[3]; // Country is the fourth column
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
         }
-      } 
     }
-  }
+}
 
-  // Shape filter
+// Shape filter
 function myShapeInput() {
     // Declare variables 
     var input, filter, table, tr, td, i, txtValue;
@@ -147,45 +179,45 @@ function myShapeInput() {
     filter = input.value.toUpperCase();
     table = document.getElementById("tableBody");
     tr = table.getElementsByTagName("tr");
-  
+
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[4]; // Shape is the fifth column
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+        td = tr[i].getElementsByTagName("td")[4]; // Shape is the fifth column
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
         }
-      } 
     }
-  }
+}
 
-  // Shape filter
-  function myDurationInput() {
+// Shape filter
+function myDurationInput() {
     // Declare variables 
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("durationFilter");
     filter = input.value.toUpperCase();
     table = document.getElementById("tableBody");
     tr = table.getElementsByTagName("tr");
-  
+
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[5]; // Duration is the sixth column
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+        td = tr[i].getElementsByTagName("td")[5]; // Duration is the sixth column
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
         }
-      } 
     }
-  }
+}
 
-  // Comments filter
+// Comments filter
 function myCommentsInput() {
     // Declare variables 
     var input, filter, table, tr, td, i, txtValue;

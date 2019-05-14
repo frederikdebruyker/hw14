@@ -7,53 +7,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- Bring in our bootstrap stylesheet -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Cascading stylesheet if required -->
     <link rel="stylesheet" href="static/css/style.css">
+    <!-- https://codepen.io/iddar/pen/xwXowq -->
+    <link rel="stylesheet" href="static/css/pacman.css">
     <!-- title -->
     <title>JavaScript and DOM Manipulation</title>
 </head>
 
 <body class='bg-white'>
-    <div class='container'>
-        <div id='filterArea' class='col-md-12 col-lg-12'>
-                <input type="date" id="dateFilter" onkeyup="myDateInput()" placeholder="Search for Date.." title="Type in a date">
-                <input type="text" id="cityFilter" onkeyup="myCityInput()" placeholder="Search for city.." title="Type in a city">
-                <input type="text" id="stateFilter" onkeyup="myStateInput()" placeholder="Search for state.." title="Type in a state">
-                <input type="text" id="countryFilter" onkeyup="myCountryInput()" placeholder="Search for country.." title="Type in a country">
-                <input type="text" id="shapeFilter" onkeyup="myShapeInput()" placeholder="Search for shape.." title="Type in a shape">
-                <input type="text" id="durationFilter" onkeyup="myDurationInput()" placeholder="Search for duration.." title="Type in a duration">
-                <input type="text" id="commentsFilter" onkeyup="myCommentsInput()" placeholder="Search for comments.." title="Type in a (part of a) comment">
-            </div>
-        <div id='tableArea' class="">
-            <table class='table table-striped'>
-                <!-- table header -->
-                <thead class='bg-primary'>
-                    <th scope='columnHeader'>Date/Time</th>
-                    <th scope='columnHeader'>City</th>
-                    <th scope='columnHeader'>State</th>
-                    <th scope='columnHeader'>Country</th>
-                    <th scope='columnHeader'>Shape</th>
-                    <th scope='columnHeader'>Duration (Minutes)</th>
-                    <th scope='columnHeader'>Comments</th>
-                </thead>
-                <!-- table body -->
-                <tbody id='tableBody' class=''></tbody>
-            </table>
+    <div class='container-fluid col-sm-12 col-md-12 col-lg-12'>
+        <div class="jumbotron text-center bg-primary col-sm-12 col-md-12">
+            <div class='row'>
+                <div class='col-sm-3 col-md-2 col-lg-2'>
+                    <!-- http://clipartist.net/page/164/ -->
+                    <img class='img-fluid' src='static/images/alien_6576576_black_white_line_art.svg'>
 
+                </div>
+                <div class='col-sm-6 col-md-8 col-lg-8'>
+                    <h1>WAKE UP SHEEPLE!</h1>
+                    <h4>Extra-terrestrial UFO eye-witness reports</h4>
+                    <div class='pac-man'></div>
+                </div>
+                <div class='col-sm-3 col-md-2 col-lg-2'>
+                        <!-- http://clipartist.net/page/164/ -->
+                        <img class='img-fluid' src='static/images/alien_6576576_black_white_line_art.svg'>
+    
+                    </div>
+               </div>
         </div>
-
+        <div class='row'>
+            <div class='col-sm-12 col-md-3 col-lg-3'>
+                <div id='filterArea' class='col-sm-12 col-md-12 col-lg-12'>
+                    <h5>Filter / Search</h5>
+                    <input type="date" id="dateFilter" class="col-sm-12 col-md-12 col-lg-12" onkeyup="myDateInput()"
+                        placeholder="Search for Date.." title="Type in a date">
+                    <input type="text" id="cityFilter" class="col-sm-12 col-md-12 col-lg-12" onkeyup="myCityInput()"
+                        placeholder="Search for city.." title="Type in a city">
+                    <input type="text" id="stateFilter" class="col-sm-12 col-md-12 col-lg-12" onkeyup="myStateInput()"
+                        placeholder="Search for state.." title="Type in a state">
+                    <input type="text" id="countryFilter" class="col-sm-12 col-md-12 col-lg-12"
+                        onkeyup="myCountryInput()" placeholder="Search for country.." title="Type in a country">
+                    <input type="text" id="shapeFilter" class="col-sm-12 col-md-12 col-lg-12" onkeyup="myShapeInput()"
+                        placeholder="Search for shape.." title="Type in a shape">
+                    <input type="text" id="durationFilter" class="col-sm-12 col-md-12 col-lg-12"
+                        onkeyup="myDurationInput()" placeholder="Search for duration.." title="Type in a duration">
+                    <input type="text" id="commentsFilter" class="col-sm-12 col-md-12 col-lg-12"
+                        onkeyup="myCommentsInput()" placeholder="Search for comments.."
+                        title="Type in a (part of a) comment">
+                </div>
+                <div class='col-sm-12 col-md-2 col-lg-12'>
+                    <!-- credit: https://www.cartoonstock.com/directory/u/ufo_sighting.asp -->
+                    <img class='img-fluid pt-5'
+                        src='static/images/science-u-o-sighting-unidentified-object-ksmn1523_low.jpg'
+                        alt='ufo cartoon'></img>
+                </div>
+            </div>
+            <div id='tableArea' class="col-sm-12 col-md-9 col-lg-9">
+                <table class='table table-striped'>
+                    <!-- table header -->
+                    <thead class='bg-secondary'>
+                        <th scope='columnHeader'>Date/Time</th>
+                        <th scope='columnHeader'>City</th>
+                        <th scope='columnHeader'>State</th>
+                        <th scope='columnHeader'>Country</th>
+                        <th scope='columnHeader'>Shape</th>
+                        <th scope='columnHeader'>Duration (Minutes)</th>
+                        <th scope='columnHeader'>Comments</th>
+                    </thead>
+                    <!-- table body -->
+                    <tbody id='tableBody' class=''></tbody>
+                </table>
+            </div>
+        </div>
     </div>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="static/js/data.js"></script>
     <script src="static/js/app.js"></script>
 </body>
 
 </html>
-
-
-<head>
-  <title>UFO Finder</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/superhero/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-  <link rel="stylesheet" href="static/css/style.css">
-</head>
