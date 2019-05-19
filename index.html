@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="static/css/style.css">
     <!-- https://codepen.io/iddar/pen/xwXowq -->
     <link rel="stylesheet" href="static/css/pacman.css">
+    <!-- https://d3js.org/ -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
     <!-- title -->
     <title>JavaScript and DOM Manipulation</title>
 </head>
@@ -42,21 +44,20 @@
             <div class='col-sm-12 col-md-3 col-lg-3'>
                 <div id='filterArea' class='col-sm-12 col-md-12 col-lg-12'>
                     <h5>Filter / Search</h5>
-                    <input type="date" id="dateFilter" class="col-sm-12 col-md-12 col-lg-12" onkeyup="myDateInput()"
+                    <input type="string" id='dateFilter' class="col-sm-12 col-md-12 col-lg-12" onkeyup="myInputFilter()"
                         placeholder="Search for Date.." title="Type in a date">
-                    <input type="text" id="cityFilter" class="col-sm-12 col-md-12 col-lg-12" onkeyup="myCityInput()"
-                        placeholder="Search for city.." title="Type in a city">
-                    <input type="text" id="stateFilter" class="col-sm-12 col-md-12 col-lg-12" onkeyup="myStateInput()"
-                        placeholder="Search for state.." title="Type in a state">
-                    <input type="text" id="countryFilter" class="col-sm-12 col-md-12 col-lg-12"
-                        onkeyup="myCountryInput()" placeholder="Search for country.." title="Type in a country">
-                    <input type="text" id="shapeFilter" class="col-sm-12 col-md-12 col-lg-12" onkeyup="myShapeInput()"
-                        placeholder="Search for shape.." title="Type in a shape">
-                    <input type="text" id="durationFilter" class="col-sm-12 col-md-12 col-lg-12"
-                        onkeyup="myDurationInput()" placeholder="Search for duration.." title="Type in a duration">
-                    <input type="text" id="commentsFilter" class="col-sm-12 col-md-12 col-lg-12"
-                        onkeyup="myCommentsInput()" placeholder="Search for comments.."
-                        title="Type in a (part of a) comment">
+                        <input type="string" id='cityFilter' class="col-sm-12 col-md-12 col-lg-12" onkeyup="myInputFilter()"
+                        placeholder="Search for City.." title="Type in a city">
+                        <input type="string" id='stateFilter' class="col-sm-12 col-md-12 col-lg-12" onkeyup="myInputFilter()"
+                        placeholder="Search for State.." title="Type in a state">
+                        <input type="string" id='countryFilter' class="col-sm-12 col-md-12 col-lg-12" onkeyup="myInputFilter()"
+                        placeholder="Search for Country.." title="Type in a country">
+                        <input type="string" id='shapeFilter' class="col-sm-12 col-md-12 col-lg-12" onkeyup="myInputFilter()"
+                        placeholder="Search for Shape.." title="Type in a shape">
+                        <input type="string" id='durationFilter' class="col-sm-12 col-md-12 col-lg-12" onkeyup="myInputFilter()"
+                        placeholder="Search for Duration.." title="Type in a duration">
+                        <input type="string" id='commentsFilter' class="col-sm-12 col-md-12 col-lg-12" onkeyup="myInputFilter()"
+                        placeholder="Search for Comments.." title="Type in a comments">
                 </div>
                 <div class='col-sm-12 col-md-2 col-lg-12'>
                     <!-- credit: https://www.cartoonstock.com/directory/u/ufo_sighting.asp -->
@@ -78,12 +79,11 @@
                         <th scope='columnHeader'>Comments</th>
                     </thead>
                     <!-- table body -->
-                    <tbody id='tableBody' class=''></tbody>
+                    <tbody id='tableBody' class='tableBody'></tbody>
                 </table>
             </div>
         </div>
     </div>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="static/js/data.js"></script>
     <script src="static/js/app.js"></script>
 </body>

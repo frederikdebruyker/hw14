@@ -1,9 +1,5 @@
 // from data.js
 var tableData = data;
-var rowData = tableData[0];
-
-// log tableData in console
-console.log(tableData);
 
 // Add the following datum as the third entry of the data.js file
 var dataAdd = {
@@ -22,222 +18,75 @@ tableData.splice(2, 0, dataAdd)
 // show data function
 function showData() {
 
-    // show tableData in html
-    var htmlTbody = "";
-    tableData.forEach(function (rowData) {
-        // console.log(rowData);
-        htmlTbody += "<tr scope='row'>";
+    // Get a reference to the table body
+    var tableBody = d3.select("tbody");
 
-        htmlTbody += "<td>" + rowData.datetime + "</td>";
-        htmlTbody += "<td>" + rowData.city + "</td>";
-        htmlTbody += "<td>" + rowData.state + "</td>";
-        htmlTbody += "<td>" + rowData.country + "</td>";
-        htmlTbody += "<td>" + rowData.shape + "</td>";
-        htmlTbody += "<td>" + rowData.durationMinutes + "</td>";
-        htmlTbody += "<td>" + rowData.comments + "</td>";
-
-        htmlTbody += "</tr>";
+    tableData.forEach((ufosightings) => {
+        var row = tableBody.append("tr");
+        Object.values(ufosightings).forEach((value) => {
+            row.append("td").text(value);
+        });
     });
-
-    // log html table
-    // console.log(htmlTbody);
-
-    // insert html table
-    document.getElementById("tableBody").innerHTML = htmlTbody;
 
     return;
 }
 
-// Full filter
-function myFilter() {
-    // reinitialize table
-    tableData = data;
+// show data
+showData();
+
+// Full filter - multi fields
+function myInputFilter() {
     // define filter
     var fullFilter = [];
-    fullFilter['datetime'] = document.getElementById("dateFilter").value.toUpperCase();
-    fullFilter['city'] = document.getElementById("cityFilter").value.toUpperCase();
-    fullFilter['state'] = document.getElementById("stateFilter").value.toUpperCase();
-    fullFilter['country'] = document.getElementById("countryFilter").value.toUpperCase();
-    fullFilter['shape'] = document.getElementById("shapeFilter").value.toUpperCase();
-    fullFilter['durationMinutes'] = document.getElementById("durationFilter").value.toUpperCase();
-    fullFilter['comments'] = document.getElementById("commentsFilter").value.toUpperCase();
+    // Structure
+    // // Select the input element and get the raw HTML node
+    // var inputElement = d3.select("#dateInput");
+    // // Get the value property of the input element
+    // var inputValue = inputElement.property("value");
+    // console.log(inputValue);
 
-    var xFiltered = tableData.filter(obj => obj.city < 3);
+    fullFilter['dateFilter'] = d3.select("#dateFilter").property("value");
+    fullFilter['cityFilter'] = d3.select("#cityFilter").property("value");
+    fullFilter['stateFilter'] = d3.select("#stateFilter").property("value");
+    fullFilter['countryFilter'] = d3.select("#countryFilter").property("value");
+    fullFilter['shapeFilter'] = d3.select("#shapeFilter").property("value");
+    fullFilter['durationFilter'] = d3.select("#durationFilter").property("value");
+    fullFilter['commentsFilter'] = d3.select("#commentsFilter").property("value");
 
-    // console.log(fullFilter)
-    tableData = tableData.filter(item => {
-        for (let key in fullFilter) {
-            console.log('in for loop');
-            if (item[key] === undefined || item[key] != fullFilter[key])
-                return false;
-        }
-        return true;
-    });
-    // apply filter
-    console.log(tableData)
-}
-
-// Date filter
-function myDateInput() {
     // Declare variables 
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("dateFilter");
-    filter = input.value.toUpperCase();
+    var filterKeys = Object.keys(fullFilter);
+    var table, tr, i, j, input, filter, td, txtValue;
+
+    // read the tableBody from the html -> is singular value in this case
     table = document.getElementById("tableBody");
+    // read all the table rows defined
     tr = table.getElementsByTagName("tr");
 
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0]; // Date is the first column
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-}
-
-// City filter
-function myCityInput() {
-    // Declare variables 
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("cityFilter");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("tableBody");
-    tr = table.getElementsByTagName("tr");
-    console.log('called'); myFilter();
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1]; // City is the second column
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
+        // table row is displayed by default
+        tr[i].style.display = "";
+        // initialize
+        j = 0;
+        for (var filterKey of filterKeys) {
+            td = tr[i].getElementsByTagName("td")[j];
+            input = document.getElementById(filterKey);
+            filter = input.value.toUpperCase();
+            j++;
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                    // row should not be displayed if any cell if filtered out
+                    break;
+                }
             }
         }
     }
 }
 
 
-// State filter
-function myStateInput() {
-    // Declare variables 
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("stateFilter");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("tableBody");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[2]; // State is the third column
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-}
-
-// Country filter
-function myCountryInput() {
-    // Declare variables 
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("countryFilter");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("tableBody");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[3]; // Country is the fourth column
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-}
-
-// Shape filter
-function myShapeInput() {
-    // Declare variables 
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("shapeFilter");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("tableBody");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[4]; // Shape is the fifth column
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-}
-
-// Shape filter
-function myDurationInput() {
-    // Declare variables 
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("durationFilter");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("tableBody");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[5]; // Duration is the sixth column
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-}
-
-// Comments filter
-function myCommentsInput() {
-    // Declare variables 
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("commentsFilter");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("tableBody");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[6]; // Comments is the seventh column
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-}
 // show data
 showData();
